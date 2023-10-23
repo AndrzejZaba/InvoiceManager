@@ -10,7 +10,7 @@
 {
     <button 
         class="btn btn-primary mb-3"
-        onclick='window.location.href = @Url.Action("InvoicePosition","Home", new { invoiceId = Model.Invoice.Id})"'>
+        onclick='window.location.href = "@Url.Action("InvoicePosition","Home", new { invoiceId = Model.Invoice.Id})"'>
         Dodaj pozycję
     </button>
 
@@ -27,13 +27,11 @@
             if (Model.Invoice.Id == 0)
             {
                 <p class="alert alert-info mt-4 mb-4">
-                    Pola tytuł, klieent, sposób płatności i termin są <strong>wymagane</strong>
+                    Pola tytuł, klient, sposób płatności i termin są <strong>wymagane</strong>
                 </p>
             }
 
             @Html.HiddenFor(x => x.Invoice.Id)
-            @Html.HiddenFor(x => x.Invoice.UserId)
-            @Html.HiddenFor(x => x.Invoice.CreatedDate)
 
             <div class="">
                 @Html.LabelFor(x => x.Invoice.Title)
