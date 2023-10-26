@@ -7,6 +7,8 @@
 
 @using (Html.BeginForm("InvoicePosition", "Home"))
 {
+    @Html.AntiForgeryToken()
+
     if (Model.InvoicePosition.Id == 0)
     {
         <p class="alert alert-info mt-4 mb-4">
@@ -15,13 +17,13 @@
     }
     @Html.HiddenFor(x => x.InvoicePosition.Id)
     @Html.HiddenFor(x => x.InvoicePosition.InvoiceId)
-    
+
     <div>
         @Html.LabelFor(x => x.InvoicePosition.Lp)
         @Html.TextBoxFor(x => x.InvoicePosition.Lp, new { @class = "form-control", autofocus = "autofocus" })
         @Html.ValidationMessageFor(x => x.InvoicePosition.Lp)
     </div>
-    
+
     <div class="">
         @Html.LabelFor(x => x.InvoicePosition.ProductId)
         @Html.DropDownListFor(x => x.InvoicePosition.ProductId,
@@ -29,13 +31,13 @@
             new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.InvoicePosition.ProductId)
     </div>
-    
+
     <div>
         @Html.LabelFor(x => x.InvoicePosition.Quantity)
         @Html.TextBoxFor(x => x.InvoicePosition.Quantity, new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.InvoicePosition.Quantity)
     </div>
-    
+
     if (Model.InvoicePosition.Id != 0)
     {
         <div class="">
@@ -43,9 +45,9 @@
             @Html.TextBoxFor(x => x.InvoicePosition.Value, new { @class = "form-control", @readonly = "readonly" })
         </div>
     }
-    
+
     <button class="btn btn-primary btn-lg mb-5" type="submit">Zapisz</button>
-    
+
 }
 
 @section Scripts
@@ -60,6 +62,6 @@
 
         });
 
-    </script>    
+    </script>
 }
 

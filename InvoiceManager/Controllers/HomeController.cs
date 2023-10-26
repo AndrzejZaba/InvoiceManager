@@ -2,6 +2,7 @@
 using InvoiceManager.Models.ViewModels;
 using InvoiceManager.Repositories;
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,6 +94,7 @@ namespace InvoiceManager.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Invoice(Invoice invoice)
         {
             var userId = User.Identity.GetUserId();
@@ -114,6 +116,7 @@ namespace InvoiceManager.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult InvoicePosition(InvoicePosition invoicePosition)
         {
             var userId = User.Identity.GetUserId();
