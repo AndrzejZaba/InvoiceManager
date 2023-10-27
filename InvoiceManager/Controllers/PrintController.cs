@@ -51,5 +51,13 @@ namespace InvoiceManager.Controllers
             return File(data, "application/pdf", fileName);
         }
 
+        public ActionResult PrintInvoice(int id)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var invoice = _invoiceRepository.GetInvoice(id, userId);
+
+            return View("InvoiceTemplate", invoice);
+        }
     }
 }

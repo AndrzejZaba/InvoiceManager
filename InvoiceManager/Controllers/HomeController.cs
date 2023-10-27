@@ -167,7 +167,7 @@ namespace InvoiceManager.Controllers
             try
             {
                 var userId = User.Identity.GetUserId();
-                _invoiceRepository.DeletePosition(id, userId);
+                _invoiceRepository.DeletePosition(id, invoiceId, userId);
                 invoiceValue = _invoiceRepository.UpdateInvoiceValue(invoiceId, userId);
             }
             catch (Exception exception)

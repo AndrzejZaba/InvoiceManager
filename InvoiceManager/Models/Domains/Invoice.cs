@@ -43,6 +43,8 @@ namespace InvoiceManager.Models.Domains
         [ForeignKey("User")]
         public string UserId { get; set; }
 
+        //[Required]
+        //public int NumberOfPositions { get; set; }
 
 
         public MethodOfPayment MethodOfPayment { get; set; }

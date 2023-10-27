@@ -57,7 +57,7 @@
         }
 
         $(document).ready(function () {
-            if ($.cookie("privacyPolicy") !== "1")
+            if ($.cookie("privacyPolicy") !== "1" && !$(document).is("InvoiceTemplate.cshtml"))
                 $('.privacyPolicyInfo').css("display", "");
         });
     </script>

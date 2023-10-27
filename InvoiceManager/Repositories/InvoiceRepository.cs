@@ -53,6 +53,29 @@ namespace InvoiceManager.Repositories
             }
         }
 
+        public List<InvoicePosition> GetInvoicePositions(int invoiceId, string userId)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                return context.InvoicePositions
+                    .Include(x => x.Invoice)
+                    .Where(x => x.InvoiceId == invoiceId && x.Invoice.UserId == userId)
+                    .ToList();
+            }
+        }
+
+        private void UpdatePositionsLp(int invoiceId, string userId)
+        {
+            var positions = GetInvoicePositions(invoiceId, userId);
+            var counter = 1;
+            foreach (var invoicePosition in positions)
+            {
+                invoicePosition.Lp = counter;
+                UpdatePosition(invoicePosition, userId);
+                counter++;
+            }
+        }
+
         public void Add(Invoice invoice)
         {
             using (var context = new ApplicationDbContext())
@@ -104,7 +127,7 @@ namespace InvoiceManager.Repositories
                 positionToUpdate.Lp = invoicePosition.Lp;
                 positionToUpdate.ProductId = invoicePosition.ProductId;
                 positionToUpdate.Quantity = invoicePosition.Quantity;
-                positionToUpdate.Value = invoicePosition.Product.Value * invoicePosition.Quantity;
+                positionToUpdate.Value = positionToUpdate.Product.Value * invoicePosition.Quantity;
 
                 context.SaveChanges();
 
@@ -137,7 +160,7 @@ namespace InvoiceManager.Repositories
             }
         }
 
-        public void DeletePosition(int id, string userId)
+        public void DeletePosition(int id, int invoiceId, string userId)
         {
             using (var context = new ApplicationDbContext())
             {
@@ -146,6 +169,11 @@ namespace InvoiceManager.Repositories
                     .Single(x => x.Id == id && x.Invoice.UserId == userId);
 
                 context.InvoicePositions.Remove(positionToDelete);
+
+                context.SaveChanges();
+
+                UpdatePositionsLp(invoiceId, userId);
+
                 context.SaveChanges();
             }
         }

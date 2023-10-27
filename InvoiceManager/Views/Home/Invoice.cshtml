@@ -16,6 +16,10 @@
     <button class="btn btn-secondary mb-3" onclick="generatePdf()">
         Generuj PDF
     </button>
+
+    <button class="btn btn-secondary mb-3" onclick="printInvoice()">
+        Drukuj
+    </button>
 }
 
 <div class="row">
@@ -177,6 +181,19 @@
                 updateViewDate: true
             })
         })
+
+        function printInvoice() {
+            var url = '@Url.Action("PrintInvoice","Print")' + '?id=' + '@Model.Invoice.Id';
+
+            var myWindow = window.open(url, '', '');
+
+            myWindow.onload = function () {
+                myWindow.print();
+                myWindow.onafterprint = function () {
+                    myWindow.close();
+                }
+            }
+        }
 
     </script>
 }
