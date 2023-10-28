@@ -86,10 +86,12 @@ namespace InvoiceManager.Controllers
 
         private InvoicePosition GetNewPosition(int invoiceId, int invoicePositionId)
         {
+            var userId = User.Identity.GetUserId();
             return new InvoicePosition
             {
                 Id = invoicePositionId,
-                InvoiceId = invoiceId
+                InvoiceId = invoiceId,
+                Invoice = _invoiceRepository.GetInvoice(invoiceId, userId)
             };
         }
 

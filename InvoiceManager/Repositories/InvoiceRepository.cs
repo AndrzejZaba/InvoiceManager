@@ -111,6 +111,7 @@ namespace InvoiceManager.Repositories
                     .Single(x => x.Id == invoicePosition.InvoiceId && x.UserId == userId);
 
                 context.InvoicePositions.Add(invoicePosition);
+                invoice.NumberOfPositions++;
                 context.SaveChanges();
             }
         }
@@ -171,6 +172,11 @@ namespace InvoiceManager.Repositories
                 context.InvoicePositions.Remove(positionToDelete);
 
                 context.SaveChanges();
+
+                var invoice = context.Invoices
+                    .Single(x => x.Id == invoiceId && x.UserId == userId);
+
+                invoice.NumberOfPositions--;
 
                 UpdatePositionsLp(invoiceId, userId);
 

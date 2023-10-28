@@ -18,11 +18,20 @@
     @Html.HiddenFor(x => x.InvoicePosition.Id)
     @Html.HiddenFor(x => x.InvoicePosition.InvoiceId)
 
-    <div>
-        @Html.LabelFor(x => x.InvoicePosition.Lp)
-        @Html.TextBoxFor(x => x.InvoicePosition.Lp, new { @class = "form-control", autofocus = "autofocus" })
-        @Html.ValidationMessageFor(x => x.InvoicePosition.Lp)
-    </div>
+<div>
+    @Html.LabelFor(x => x.InvoicePosition.Lp)
+    @if (Model.InvoicePosition.Id == 0)
+    {
+        @Html.TextBoxFor(x => x.InvoicePosition.Lp, new { @class = "form-control", @Value = (Model.InvoicePosition.Invoice.NumberOfPositions + 1).ToString(), @readonly = "readonly" })
+
+    }
+    else
+    {
+        @Html.TextBoxFor(x => x.InvoicePosition.Lp, new { @class = "form-control", @readonly = "readonly" })
+
+    }
+    @Html.ValidationMessageFor(x => x.InvoicePosition.Lp)
+</div>
 
     <div class="">
         @Html.LabelFor(x => x.InvoicePosition.ProductId)
